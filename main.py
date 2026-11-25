@@ -1,5 +1,5 @@
 
-import CredentialLibrary
+import loginLib
 
 
 def showOptions() -> None:
@@ -36,7 +36,9 @@ def userMenu(User):
             print(f"Profile ID {User[0]} - {User[1]}")
 
         elif choice == 2:
-            pass
+            newPassword = input("Insert new password: ")
+            loginLib.change_password(User[1], newPassword)
+            print("Password changed successfully!")
 
         else:
             print("Unknown option!")
@@ -65,9 +67,9 @@ def main():
             username = input("Insert username: ")
             password = input("Insert password: ")
 
-            User = CredentialLibrary.authenticateUser(username, password)
+            User = loginLib.viewProfile(username)
 
-            if User is None:
+            if User is None or not loginLib.login(username, password):
                 print("Authentication failed!")
             else:
                 print("Authentication successful!")
@@ -77,7 +79,7 @@ def main():
             username = input("Insert username: ")
             password = input("Insert password: ")
 
-            CredentialLibrary.registerUser(username, password)
+            loginLib.register(username, password)
 
             print("User registration completed!")
 
